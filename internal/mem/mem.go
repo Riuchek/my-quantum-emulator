@@ -1,6 +1,5 @@
 package mem
 
-// Register é um pedaço de memória bruta pra brincar com bits.
 type Register struct {
 	Bits []byte
 }

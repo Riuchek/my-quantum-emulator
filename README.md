@@ -35,7 +35,3 @@ internal/gate/       H, CNOT, X, I — só o nome da porta
 internal/circuit/    lista de portas
 internal/bell/       circuito H(0) + CNOT(0,1), sem aplicar
 ```
-
-## Próximo passo
-
-Aplicar as portas no vetor de estado (`internal/state`), depois medir. Bell é H no qubit 0 seguido de CNOT(0, 1).

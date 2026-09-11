@@ -2,7 +2,6 @@ package circuit
 
 import "my-quantum-emulator/internal/gate"
 
-// Circuit é uma lista de portas em ordem.
 type Circuit struct {
 	NQubits int
 	Gates   []gate.Gate
