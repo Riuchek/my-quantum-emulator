@@ -20,16 +20,22 @@ func New(numQubits int) *State {
 	return &State{NumQubits: numQubits, Amplitude: amplitude}
 }
 
-func (s *State) Hadamard() {
+// Hadamard applies H to one qubit. Qubit 0 is the least significant bit of the index:
+// index 0 = |…00⟩, 1 = |…01⟩, 2 = |…10⟩, 3 = |…11⟩.
+func (s *State) Hadamard(qubit int) {
 	h := complex(1/math.Sqrt(2), 0)
-	hadamard := [][]complex128{
-		{h, h},
-		{h, -h},
-	}
+	after := make([]complex128, len(s.Amplitude))
+	bitOfQubit := 1 << qubit
 
-	// Write into a copy so the second line still sees the original α.
-	after := make([]complex128, 2)
-	after[0] = hadamard[0][0]*s.Amplitude[0] + hadamard[0][1]*s.Amplitude[1]
-	after[1] = hadamard[1][0]*s.Amplitude[0] + hadamard[1][1]*s.Amplitude[1]
+	for i := range s.Amplitude {
+		if i&bitOfQubit != 0 {
+			continue
+		}
+		partner := i | bitOfQubit
+		a := s.Amplitude[i]
+		b := s.Amplitude[partner]
+		after[i] = h*a + h*b
+		after[partner] = h*a - h*b
+	}
 	s.Amplitude = after
 }
